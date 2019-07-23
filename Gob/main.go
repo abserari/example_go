@@ -13,19 +13,19 @@ import (
 	"log"
 )
 
-type Ping struct {
+type ping struct {
 	X, Y, Z int
 	Name    string
 	Args    interface{}
 }
 
-type Pong struct {
+type pong struct {
 	X, Y *int32
 	Name string
 	Args interface{}
 }
 
-type Args struct {
+type args struct {
 	A, B int
 }
 
@@ -34,13 +34,13 @@ func main() {
 	enc := gob.NewEncoder(&network)
 	dec := gob.NewDecoder(&network)
 
-	gob.RegisterName("two", Args{})
-	err := enc.Encode(Ping{3, 4, 5, "Pythagoras", Args{2, 3}})
+	gob.RegisterName("two", args{})
+	err := enc.Encode(ping{3, 4, 5, "Pythagoras", args{2, 3}})
 	if err != nil {
 		log.Fatal("encode error:", err)
 	}
 
-	var pong Pong
+	var pong pong
 	err = dec.Decode(&pong)
 	if err != nil {
 		log.Fatal("decode error:", err)
